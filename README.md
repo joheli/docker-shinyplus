@@ -13,7 +13,7 @@ To install Docker CE for your operating system, please head to [docker docs](htt
 
 ### Without an app - just checking
 
-If the installation was a success, the following command should fire up the image `johanneselias/shinyplus`:
+If the installation of Docker CE was a success, the following command should fire up the image `johanneselias/shinyplus`:
 
     docker run -d --name whatever --rm --user shiny -p 80:3838 johanneselias/shinyplus
 
@@ -25,7 +25,7 @@ To stop the container, type `docker kill whatever`. Switch `--rm` makes sure, th
 
 ### With an app - this time for real
 
-Once you have familiarised yourself with the image it is time to supply your own shiny app. To feed it to the image you have to supply a volume specifying a folder that the container has access to. Unpack your app (if necessary) to an empty folder and make sure that folder (and any subfolders) is accessible to the container (on Linux, this can be achieved by issuing the command `chmod a+x foldername`.). Next, supply the folder to the image using the `-v` switch, like so:
+If you have been successful starting the image as shown above, it is time to supply your own shiny app. If you have no clue how to build a shiny app head to the [intro by RStudio](https://shiny.rstudio.com/articles/build.html) to get up to speed. To feed your app to the image, you have to supply a volume specifying its folder. Here´s how: unpack your app (if at all necessary) to an empty folder and make sure that same folder (and any subfolders) is (are) accessible to the container (if you are on Linux, this can be achieved by issuing the command `chmod a+x foldername`.). Next, supply the folder to the image using the `-v` switch, like so:
 
     docker run -d --name whatever --rm --user shiny -p 80:3838 -v /home/myself/myapp/:/srv/shiny-server/ johanneselias/shinyplus
     
@@ -35,10 +35,10 @@ If all went to plan, requesting `http://localhost` from your browser now shoud r
 
 ## Troubleshooting
 
-If you experience problems with your app, head first to the logs. There are various ways to access it, e.g. you could access the log folder with an additional `-v` flag. Alternatively, access the container from the command line directly. To do this, type
+If your app doesn't work as intended, head first to the logs. There are various ways to access it, e.g. you could access the log folder with an additional `-v` flag (not described here). Alternatively, you could access the container from the command line directly. To do this, type
 
     docker exec -it whatever bash
 
 This opens a `bash` terminal **inside** your container. From within, navigate to directory `/var/log/shiny-server/` to see the log files. To exit the container, simply type `exit` and press Return.
 
-The docs of [rocker/shiny](https://hub.docker.com/r/rocker/shiny "rocker/shiny on docker hub") also provide useful hints. 
+The docs of [rocker/shiny](https://hub.docker.com/r/rocker/shiny "rocker/shiny on docker hub") also provide useful hints in case you are stuck. 
